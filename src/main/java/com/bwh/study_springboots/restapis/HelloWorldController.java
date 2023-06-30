@@ -15,6 +15,7 @@ import com.bwh.study_springboots.Service.HelloWorldService;
 public class HelloWorldController {// 메소드의 이름만 다르다면 여러개의 url을 넣을 수있다.
     @Autowired // new HelloWorldService(); 생략할수 있다.
     HelloWorldService helloWorldService;
+
     @GetMapping("/helloworld") // servlet의 doGet 과 같은 설정임.
     public int helloworld() {
         return 0;
@@ -69,13 +70,24 @@ public class HelloWorldController {// 메소드의 이름만 다르다면 여러
 
         return ResponseEntity.ok().body(arrayList);
     }
-    
+
+    // http://192.168.0.46:8080/helloworldResponseWithService/1/10/1
     @GetMapping("/helloworldResponseWithService/{spm_row}/{SN}/{CMPNM}") // servlet의 doGet 과 같은 설정임.
     public ResponseEntity<Object> helloworldResponseWithService(@PathVariable String spm_row, @PathVariable String SN,
             @PathVariable String CMPNM) {// @PathVariable 해당 변수가 parameter라고 설정해주는 것
         ArrayList arrayList = new ArrayList<>();
-        
-        arrayList = helloWorldService.fakeSelect(spm_row,SN);
+
+        arrayList = helloWorldService.fakeSelect(spm_row, SN);
+        return ResponseEntity.ok().body(arrayList);
+    }
+
+    // http://192.168.0.46:8080/helloworldResponseFake/?
+    @GetMapping("/helloworldResponsefake/{companyId}") // servlet의 doGet 과 같은 설정임.
+    public ResponseEntity<Object> helloworldResponseFake(@PathVariable String companyId) {// @PathVariable 해당 변수가
+                                                                                          // parameter라고 설정해주는 것
+        ArrayList arrayList = new ArrayList<>();
+
+        helloWorldService.fakeSelect(companyId);
         return ResponseEntity.ok().body(arrayList);
     }
 }
