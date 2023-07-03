@@ -81,13 +81,13 @@ public class HelloWorldController {// 메소드의 이름만 다르다면 여러
         return ResponseEntity.ok().body(arrayList);
     }
 
-    // http://192.168.0.46:8080/helloworldResponseFake/?
+    // http://192.168.0.46:8080/helloworldResponseFake/C001CAR_INFOR_ID
     @GetMapping("/helloworldResponsefake/{companyId}") // servlet의 doGet 과 같은 설정임.
     public ResponseEntity<Object> helloworldResponseFake(@PathVariable String companyId) {// @PathVariable 해당 변수가
                                                                                           // parameter라고 설정해주는 것
         ArrayList arrayList = new ArrayList<>();
 
         helloWorldService.fakeSelect(companyId);
-        return ResponseEntity.ok().body(arrayList);
+        return ResponseEntity.ok().body(arrayList); //신호를 ok, value를 body에 담아 전송.
     }
 }
