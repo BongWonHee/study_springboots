@@ -20,16 +20,17 @@ public class CarCompanyController {
     @Autowired
     CarCompanyService carCompanyService;
     
-    //selectsearch/
-    @GetMapping("/carCompanysearch/{NAME}")
-    public ResponseEntity CarCompanysearch(@PathVariable String NAME) {
-        Object result =   carCompanyService.CarCompanysearch(NAME);
+    //selectsearch/COMPANY_ID/C
+    //selectsearch/COMPANY/현
+    @GetMapping("/carCompanysearch/{COMPANY_ID}/{NAME}")
+    public ResponseEntity CarCompanysearch(@PathVariable String COMPANY_ID, @PathVariable String NAME) {
+        Object result =   carCompanyService.CarCompanysearch(COMPANY_ID, NAME);
 
         return ResponseEntity.ok().body(result);
     }
 
     // create
-    //carCompanyinsert
+    //carCompanyinsert/CI001/쌍용
     @PostMapping("/carCompanyinsert") // @PostMapping 은 insert로 인식한다.
     public ResponseEntity CarCompanyinsert(@RequestBody Map paramMap) { // url설정, RequestBody, json방식(전송) 설정
         Object result =  carCompanyService.CarCompanyinsert(paramMap);
@@ -37,12 +38,14 @@ public class CarCompanyController {
     }
 
     // update
+    //carCompanyupdate/CI001/대우
     @PutMapping("/carCompanyupdate") // @PutMapping 은 update로 인식한다.
     public ResponseEntity CarCompanyupdate(@RequestBody Map paramMap) { // url설정, RequestBody, json방식(전송) 설정
         Object result =  carCompanyService.CarCompanyupdate(paramMap);
         return ResponseEntity.ok().body(result);
     }
 
+    //carCompanydelete/CI001
     @DeleteMapping("/carCompanydelete/{COMPANY_ID}")
     public ResponseEntity CarCompanydelete(@PathVariable String COMPANY_ID) {
         Object result =  carCompanyService.CarCompanydelete(COMPANY_ID);

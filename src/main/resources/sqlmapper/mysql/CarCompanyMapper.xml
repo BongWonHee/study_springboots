@@ -5,7 +5,16 @@
     <select id="search" parameterType="Map" resultType="Map"> 
     SELECT * 
     FROM factorys
-    where COMPANY like CONCAT(#{NAME},'%')
+     where 1 = 1 
+     <choose> <!-- 검색 기능을 사용할때 조건에 따른 검색결과를 확인 할 수 있게 한다. when = if, when = else if, otherwise = else -->
+     <when test="COMPANY_ID == 'COMPANY_ID'"> <!-- 특수 기호를 사용할때 해당 기호를 쿼리로 인식 하게 하기 위해 쓰는 CDATA메소드임.-->
+     AND COMPANY_ID like CONCAT(#{NAME},'%')     
+     </when>  
+     <otherwise>
+      AND COMPANY like CONCAT(#{NAME},'%')  <!-- 해당 문구는 '검색어%'형태의 쿼리문을 나타냄-->
+     </otherwise>
+     </choose>
+  ;	
   	
     </select>
 

@@ -15,9 +15,10 @@ public class CarCompanyService {
     @Autowired
     SharedDao sharedDao;
     //검색 조건이 YEAR, CAR_NAME 일때!!
-     public Object CarCompanysearch(String NAME) {
+     public Object CarCompanysearch(String COMPANY_ID, String NAME) {
         // getOne(String sqlMapId, Object dataMap)
         HashMap dataMap = new HashMap<>();
+        dataMap.put("COMPANY_ID", COMPANY_ID);
         dataMap.put("NAME", NAME);
         
         String sqlMapId = "CarCompany.search";
