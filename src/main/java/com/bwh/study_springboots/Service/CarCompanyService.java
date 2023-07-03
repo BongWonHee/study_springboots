@@ -29,7 +29,7 @@ public class CarCompanyService {
  
     public Object CarCompanyinsert(Map dataMap){ //파라미터가 Map형식이다.
         String sqlMapId = "CarCompany.insert";
-s        Object result = sharedDao.insert(sqlMapId, dataMap);
+       Object result = sharedDao.insert(sqlMapId, dataMap);
         
         return result;
 

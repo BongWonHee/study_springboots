@@ -18,6 +18,14 @@ import com.bwh.study_springboots.Service.CarInforsService;
 public class CarInforsController {
     @Autowired
     CarInforsService carInforsService;
+    //selectsearch/YEAR/2020
+    //selectsearch/CAR_NAME/소
+    @GetMapping("/selectsearch/{search}/{words}")
+    public ResponseEntity selectsearch(@PathVariable String search, @PathVariable String words) {
+        Object result = carInforsService.selectsearch(search, words);
+
+        return ResponseEntity.ok().body(result);
+    }
 
     @GetMapping("/selectAll/{CAR_INFOR_ID}")
     public ResponseEntity selectAll(@PathVariable String CAR_INFOR_ID) {
@@ -62,7 +70,7 @@ public class CarInforsController {
             result = carInforsService.insertDouble(paramMap);
 
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(result); //에러 메세지 확인용
+            return ResponseEntity.badRequest().body(result); // 에러 메세지 확인용
         }
         return ResponseEntity.ok().body(result);
 

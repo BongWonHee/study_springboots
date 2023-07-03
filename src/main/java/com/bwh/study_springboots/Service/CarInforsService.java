@@ -14,6 +14,16 @@ import com.bwh.study_springboots.dao.SharedDao;
 public class CarInforsService {
     @Autowired
     SharedDao sharedDao;
+    //검색 조건 : YEAR, CAR_NAME임.
+     public Object selectsearch(String search, String words) {
+        // getOne(String sqlMapId, Object dataMap)
+        HashMap dataMap = new HashMap<>();
+        dataMap.put("search", search);
+        dataMap.put("words", words);
+        String sqlMapId = "CarInfors.selectsearch";
+        Object result = sharedDao.getList(sqlMapId, dataMap);
+        return result;
+    }
 
       public Object selectAll(String CAR_INFOR_ID) {
         // getOne(String sqlMapId, Object dataMap)
