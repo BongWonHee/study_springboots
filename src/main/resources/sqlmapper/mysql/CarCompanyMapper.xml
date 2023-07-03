@@ -9,8 +9,6 @@
   	
     </select>
 
-
-
     <!-- 입력 -->
     <insert id="insert" parameterType="Map" >
     insert into factorys

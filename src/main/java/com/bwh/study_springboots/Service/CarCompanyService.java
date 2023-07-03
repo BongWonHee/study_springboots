@@ -21,7 +21,7 @@ public class CarCompanyService {
         dataMap.put("NAME", NAME);
         
         String sqlMapId = "CarCompany.search";
-        Object result = sharedDao.getOne(sqlMapId, dataMap);
+        Object result = sharedDao.getList(sqlMapId, dataMap);
         return result;
     }
 
