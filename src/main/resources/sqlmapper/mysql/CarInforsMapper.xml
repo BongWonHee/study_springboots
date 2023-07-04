@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="CarInfors">
+
+<!-- mybatis foreach Map("CAR_INFOR_ID_LIST",CAR_INFOR_ID_LIST) -->
+      <select id="selectInUID" parameterType="Map" resultType="Map"> 
+      SELECT * 
+      FROM db_cars.car_infors
+      where 1 = 1
+      and CAR_INFOR_ID in 
+      <foreach item="CAR_INFOR_ID" index="index" collection="CAR_INFOR_ID_LIST"
+            open="(" separator="," close=")" nullable="true">       <!-- CAR_INFOR_ID_LIST는 postman에서 body로 값을 넘겨줄때 key값이다. -->            
+             #{CAR_INFOR_ID} 
+         </foreach>
+      ;
+      </select>
 <!-- 검색 설정 -->
     <select id="selectsearch" parameterType="Map" resultType="Map"> 
     SELECT * 

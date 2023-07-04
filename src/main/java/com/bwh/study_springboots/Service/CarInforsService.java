@@ -14,8 +14,17 @@ import com.bwh.study_springboots.dao.SharedDao;
 public class CarInforsService {
     @Autowired
     SharedDao sharedDao;
-    //검색 조건 : YEAR, CAR_NAME임.
-     public Object selectsearch(String search, String words) {
+
+    // foreach Map("CAR_INFOR_ID_LIST",CAR_INFOR_ID_LIST)
+    public Object selectInUID(Map dateMap) {
+        String sqlMapId = "CarInfors.selectInUID";
+        
+        Object result = sharedDao.getList(sqlMapId, dateMap);
+        return result;
+    }
+
+    // 검색 조건 : YEAR, CAR_NAME임.
+    public Object selectsearch(String search, String words) {
         // getOne(String sqlMapId, Object dataMap)
         HashMap dataMap = new HashMap<>();
         dataMap.put("search", search);
@@ -25,7 +34,7 @@ public class CarInforsService {
         return result;
     }
 
-      public Object selectAll(String CAR_INFOR_ID) {
+    public Object selectAll(String CAR_INFOR_ID) {
         // getOne(String sqlMapId, Object dataMap)
         HashMap dataMap = new HashMap<>();
         dataMap.put("CAR_INFOR_ID", CAR_INFOR_ID);
@@ -43,40 +52,40 @@ public class CarInforsService {
         return result;
     }
 
-    public Object insert(Map dataMap){ //파라미터가 Map형식이다.
+    public Object insert(Map dataMap) { // 파라미터가 Map형식이다.
         String sqlMapId = "CarInfors.insert";
         Object result = sharedDao.insert(sqlMapId, dataMap);
-        
+
         return result;
 
     }
 
-     public Object update(Map dataMap){ //파라미터가 Map형식이다.
+    public Object update(Map dataMap) { // 파라미터가 Map형식이다.
         String sqlMapId = "CarInfors.update";
         Object result = sharedDao.update(sqlMapId, dataMap);
-        
+
         return result;
 
     }
 
-    public Object delete(String CAR_INFOR_ID){ //파라미터가 Map형식이다.
+    public Object delete(String CAR_INFOR_ID) { // 파라미터가 Map형식이다.
         HashMap dataMap = new HashMap<>();
         dataMap.put("CAR_INFOR_ID", CAR_INFOR_ID);
         String sqlMapId = "CarInfors.delete";
         Object result = sharedDao.update(sqlMapId, dataMap);
-        
+
         return result;
 
     }
-        // 2PC 2pagecommit create
-        public Object insertDouble(Map dataMap){ //파라미터가 Map형식이다.
+
+    // 2PC 2pagecommit create
+    public Object insertDouble(Map dataMap) { // 파라미터가 Map형식이다.
         String sqlMapId = "CarInfors.insert";
-        //sucess
+        // sucess
         Object result = sharedDao.insert(sqlMapId, dataMap);
-        //error
+        // error
         result = sharedDao.insert(sqlMapId, dataMap);
-        
-        
+
         return result;
 
     }

@@ -18,8 +18,20 @@ import com.bwh.study_springboots.Service.CarInforsService;
 public class CarInforsController {
     @Autowired
     CarInforsService carInforsService;
-    //selectsearch/YEAR/2020
-    //selectsearch/CAR_NAME/소
+
+    @GetMapping("/selectInUID") 
+    public ResponseEntity selectInUID(@RequestBody Map paramMap) { // url설정, RequestBody, json방식(전송) 설정
+        Object result = null;
+        try {
+            result = carInforsService.selectInUID(paramMap);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(result);
+        }
+        return ResponseEntity.ok().body(result);
+    }
+
+    // selectsearch/YEAR/2020
+    // selectsearch/CAR_NAME/소
     @GetMapping("/selectsearch/{search}/{words}")
     public ResponseEntity selectsearch(@PathVariable String search, @PathVariable String words) {
         Object result = carInforsService.selectsearch(search, words);
