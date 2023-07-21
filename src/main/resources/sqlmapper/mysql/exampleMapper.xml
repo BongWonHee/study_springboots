@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Infors">
+    <!-- 검색 -->
+	<select id="selectSearch" parameterType="Map" resultType="Map">
+        SELECT PARENT_COMMON_CODE_ID,COMMON_CODE_ID,NAME  
+        FROM project_test.commons_code
+        where 1 = 1 
+        <choose>
+            <when test="search == 'NAME'">
+            and NAME like CONCAT(#{words}, '%')
+            </when>
+        </choose>        
+        ;
+	</select>
+
+<!-- insert -->
+<insert id="insert" parameterType="Map">
+  INSERT INTO COMMONS_CODE 
+  (COMMON_CODE_ID, NAME, ORDER_NUMBER, ATTRIBUTION_1, ATTRIBUTION_2, DESCRIPTION, SYSTEM_CODE_YN, USE_YN, PARENT_COMMON_CODE_ID, REGISTER_SEQ, REGISTRY_DATE, MODIFIER_SEQ, MODIFY_DATE )
+  VALUES 
+  (#{COMMON_CODE_ID}, #{NAME}, #{ORDER_NUMBER}, #{ATTRIBUTION_1}, #{ATTRIBUTION_2}, #{DESCRIPTION}, #{SYSTEM_CODE_YN}, #{USE_YN}, #{PARENT_COMMON_CODE_ID}, #{REGISTER_SEQ}, #{REGISTRY_DATE}, #{MODIFIER_SEQ}, #{MODIFY_DATE})
+</insert>
+
+<!-- Update --> 
+<!-- DDL문에서 not null인 값은 업데이트시 꼭 넣어줘야 하는 컬럼 / null값, insert시 생성되는 값들은 update해주지 않아도 됨. -->
+<update id="update" parameterType="Map">
+  UPDATE COMMONS_CODE
+  SET
+    NAME = #{NAME},
+    ORDER_NUMBER = #{ORDER_NUMBER},
+    DESCRIPTION = #{DESCRIPTION},
+    MODIFY_DATE = NOW()   <!-- 수정시 현재 날짜로 나오도록 하드코딩 -->
+  WHERE COMMON_CODE_ID = #{COMMON_CODE_ID}
+</update>
+
+<!-- delete -->
+<!-- 유니크 아이디 COMMON_CODE_ID로 delete -->
+<delete id="delete" parameterType="Map">
+  DELETE FROM COMMONS_CODE
+  WHERE COMMON_CODE_ID = #{COMMON_CODE_ID}
+</delete>
+</mapper>

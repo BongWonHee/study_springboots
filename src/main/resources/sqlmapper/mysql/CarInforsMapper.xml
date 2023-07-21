@@ -23,11 +23,13 @@
      <when test="search == 'YEAR'"> <!-- 특수 기호를 사용할때 해당 기호를 쿼리로 인식 하게 하기 위해 쓰는 CDATA메소드임.-->
      <![CDATA[
       AND YEAR > #{words}   
-      ]]>     
-     </when>  
-     <otherwise>
+      ]]>  
+      </when> 
+      <when test="search == 'CAR_NAME'">  
+      
+    
       AND CAR_NAME like CONCAT(#{words},'%')  <!-- 해당 문구는 '검색어%'형태의 쿼리문을 나타냄-->
-     </otherwise>
+    </when> 
      </choose>
   ;	
     </select>
@@ -35,7 +37,7 @@
  <!-- 전체 -->
     <select id="selectAll" parameterType="Map" resultType="Map"> 
     SELECT * 
-    FROM db_cars.car_infors
+    FROM project_test.commons_code
     where 1 = 1 ;	
     </select>
     

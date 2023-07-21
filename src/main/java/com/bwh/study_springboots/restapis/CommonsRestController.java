@@ -10,16 +10,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.bwh.study_springboots.Service.CarInforsService;
 
-@RestController // 데이터만 리턴할때 사용하자. //리턴이 jsp이면 @Controller를 사용하자.
-public class CarInforsController {
+@RestController
+ // 데이터만 리턴할때 사용하자. //리턴이 jsp이면 @Controller를 사용하자.
+public class CommonsRestController {
     @Autowired
     CarInforsService carInforsService;
 
-    @GetMapping("/selectInUID") 
+    @GetMapping("/rselectInUID") 
     public ResponseEntity selectInUID(@RequestBody Map paramMap) { // url설정, RequestBody, json방식(전송) 설정
         Object result = null;
         try {
@@ -32,14 +36,23 @@ public class CarInforsController {
 
     // selectsearch/YEAR/2020
     // selectsearch/CAR_NAME/소
-    @GetMapping("/selectsearch/{search}/{words}")
+    @GetMapping("/rselectsearch/{search}/{words}")
     public ResponseEntity selectsearch(@PathVariable String search, @PathVariable String words) {
         Object result = carInforsService.selectsearch(search, words);
 
         return ResponseEntity.ok().body(result);
     }
+    @GetMapping("/rselectAll")
+    public ResponseEntity selectAll(@RequestParam Map params, ModelAndView modelAndView) {
+        Object result = carInforsService.selectAll(params);
+        modelAndView.addObject("parmas", params);
+        modelAndView.addObject("result", result);
+        modelAndView.setViewName("/WEB-INF/views/CarInfors/list_Map.jsp");
 
-    @GetMapping("/selectAll/{CAR_INFOR_ID}")
+        return ResponseEntity.ok().body(result);
+    }
+
+    @GetMapping("/rselectAll/{CAR_INFOR_ID}")
     public ResponseEntity selectAll(@PathVariable String CAR_INFOR_ID) {
         Object result = carInforsService.selectAll(CAR_INFOR_ID);
 
@@ -47,7 +60,7 @@ public class CarInforsController {
     }
 
     // http:127.0.0.1:8080/selectDetail/CI002
-    @GetMapping("/selectDetail/{CAR_INFOR_ID}")
+    @GetMapping("/rselectDetail/{CAR_INFOR_ID}")
     public ResponseEntity selectDetail(@PathVariable String CAR_INFOR_ID) {
         Object result = carInforsService.selectDetail(CAR_INFOR_ID);
 
@@ -55,27 +68,27 @@ public class CarInforsController {
     }
 
     // create
-    @PostMapping("/insert") // @PostMapping 은 insert로 인식한다.
+    @PostMapping("/rinsert") // @PostMapping 은 insert로 인식한다.
     public ResponseEntity insert(@RequestBody Map paramMap) { // url설정, RequestBody, json방식(전송) 설정
         Object result = carInforsService.insert(paramMap);
         return ResponseEntity.ok().body(result);
     }
 
     // update
-    @PutMapping("/update") // @PutMapping 은 update로 인식한다.
+    @PutMapping("/rupdate") // @PutMapping 은 update로 인식한다.
     public ResponseEntity update(@RequestBody Map paramMap) { // url설정, RequestBody, json방식(전송) 설정
         Object result = carInforsService.update(paramMap);
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("/delete/{CAR_INFOR_ID}")
+    @DeleteMapping("/rdelete/{CAR_INFOR_ID}")
     public ResponseEntity delete(@PathVariable String CAR_INFOR_ID) {
         Object result = carInforsService.delete(CAR_INFOR_ID);
 
         return ResponseEntity.ok().body(result);
     }
 
-    @PostMapping("/insertDouble") // @PostMapping 은 insert로 인식한다.
+    @PostMapping("/rinsertDouble") // @PostMapping 은 insert로 인식한다.
     public ResponseEntity insertDouble(@RequestBody Map paramMap) { // url설정, RequestBody, json방식(전송) 설정
         Object result = null;
         try {

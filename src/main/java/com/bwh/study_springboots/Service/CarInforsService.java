@@ -14,12 +14,19 @@ import com.bwh.study_springboots.dao.SharedDao;
 public class CarInforsService {
     @Autowired
     SharedDao sharedDao;
+    HashMap dataHash;
 
     // foreach Map("CAR_INFOR_ID_LIST",CAR_INFOR_ID_LIST)
     public Object selectInUID(Map dateMap) {
         String sqlMapId = "CarInfors.selectInUID";
-        
+
         Object result = sharedDao.getList(sqlMapId, dateMap);
+        return result;
+    }
+
+    public Object selectsearch(Map dataMap) {
+        String sqlMapId = "CarInfors.selectsearch";
+        Object result = sharedDao.getList(sqlMapId, dataMap);
         return result;
     }
 
@@ -34,6 +41,15 @@ public class CarInforsService {
         return result;
     }
 
+        public Object selectAll(Map dataMap) {
+        // getOne(String sqlMapId, Object dataMap)
+        String sqlMapId = "CarInfors.selectAll";
+        Object result = sharedDao.getList(sqlMapId, dataMap);
+        return result;
+    }
+
+
+   
     public Object selectAll(String CAR_INFOR_ID) {
         // getOne(String sqlMapId, Object dataMap)
         HashMap dataMap = new HashMap<>();
@@ -68,6 +84,29 @@ public class CarInforsService {
 
     }
 
+    // MVC view
+    public Object delete(Map dataMap) { // 파라미터가 Map형식이다.
+        String sqlMapId = "CarInfors.delete";
+        Object result = sharedDao.delete(sqlMapId, dataMap);
+        return result;
+
+    }
+
+    // MVC view
+    public Object deleteAndSelectSearch(Map dataMap) { // 파라미터가 Map형식이다.
+        HashMap result = new HashMap<>();
+        // String sqlMapId = "CarInfors.delete";
+        // result.put("deleteCount",sharedDao.delete(sqlMapId, dataMap));
+        result.put("deleteCount",this.delete(dataMap));
+
+        // sqlMapId = "CarInfors.selectsearch";
+        result.put("resultList",this.selectsearch(dataMap));
+
+        return result;
+
+    }
+
+    // rest api
     public Object delete(String CAR_INFOR_ID) { // 파라미터가 Map형식이다.
         HashMap dataMap = new HashMap<>();
         dataMap.put("CAR_INFOR_ID", CAR_INFOR_ID);
